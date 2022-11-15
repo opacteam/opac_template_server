@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 var cors = require('cors')
 const app = express();
+const router = express.Router();
 app.use(cors())
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -28,7 +29,7 @@ const readFile = (fileName) => {
         return data;
     });
 }
-app.get('/template', (req, res) => {
+router.get('/template', (req, res) => {
 
     fs.readFile('../template.txt', "utf8", function(err, data) {
         if (err) throw err;
@@ -37,15 +38,15 @@ app.get('/template', (req, res) => {
     });
 })
 
-app.get('/', (req, res) => {
+router.get('/', (req, res) => {
     res.send('Hello World!')
 })
 
-app.post('/upload', (req, res) => {
+router.post('/upload', (req, res) => {
 
     let json = req.body;
     let stringifyJson = JSON.stringify(json);
     writeFile('template.txt', stringifyJson)
 })
 
-module.exports = app;
+module.exports = router;
