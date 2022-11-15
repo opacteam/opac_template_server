@@ -28,8 +28,20 @@ const readFile = (fileName) => {
         return data;
     });
 }
-app.get('/template', (req, res) => {
 
+app.get('/', (req, res) => {
+    let obj = {};
+    fs.readFile('template.txt', "utf8", function(err, data) {
+        if (err) throw err;
+        obj.template = data;
+    });
+    fs.readFile('theme.txt', "utf8", function(err, data) {
+        if (err) throw err;
+        obj.theme = data;
+    });
+    res.send(obj)
+})
+app.get('/template', (req, res) => {
     fs.readFile('template.txt', "utf8", function(err, data) {
         if (err) throw err;
         console.log(data)
@@ -37,15 +49,30 @@ app.get('/template', (req, res) => {
     });
 })
 
-app.get('/', (req, res) => {
-    res.send('Hello World!')
-})
-
-app.post('/upload', (req, res) => {
-
+app.post('/template', (req, res) => {
     let json = req.body;
     let stringifyJson = JSON.stringify(json);
     writeFile('template.txt', stringifyJson)
 })
+
+app.get('/theme', (req, res) => {
+    fs.readFile('theme.txt', "utf8", function(err, data) {
+        if (err) throw err;
+        console.log(data)
+        res.send(data)
+    });
+})
+
+app.post('/theme', (req, res) => {
+    let json = req.body;
+    let stringifyJson = JSON.stringify(json);
+    writeFile('theme.txt', stringifyJson)
+})
+
+
+app.get('/', (req, res) => {
+    res.send('Hello World!')
+})
+
 
 module.exports = app;
