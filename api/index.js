@@ -30,7 +30,7 @@ const readFile = (fileName) => {
 }
 app.get('/template', (req, res) => {
 
-    fs.readFile('template.txt', "utf8", function(err, data) {
+    fs.readFile('../template.txt', "utf8", function(err, data) {
         if (err) throw err;
         console.log(data)
         res.send(data)
