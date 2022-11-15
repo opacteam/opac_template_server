@@ -4,5 +4,6 @@ const template = require('./api');
 app.use(express.json({ extended: false }));
 app.use('/api', template);
 
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => console.log('running port ' + PORT));
+app.listen(PORT, () => {
+    console.log(`server started on port ${PORT}`);
+});
